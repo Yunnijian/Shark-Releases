@@ -218,6 +218,22 @@ cargo build --release --target aarch64-linux-android \
 [KSU-Universal](https://github.com/Yunnijian/KSU-Universal) 里构建，
 Shark 只内置编译好的 `libksud_universal.so`。
 
+## 常见问题
+
+- **运行时提示 `EXIT=13`（`page event ids not found` / `votes=0`）**
+  检查开发者选项中的系统跟踪（System Tracing）相关开关（“录制跟踪记录”“跟踪可调试应用”等）是否开启。系统跟踪会向内核 ftrace 环形缓冲区写入大量事件，干扰页类型探测；关闭全部系统跟踪开关并重启手机后立即运行即可。
+
+- **运行后内存占用持续升高**
+  探测阶段会临时开启并扩大内核 ftrace 缓冲区（`tracing_on` / `buffer_size_kb`），正常结束会自动还原，异常退出时可能残留。可用 root shell 手动还原，重启手机也会恢复：
+
+  ```sh
+  echo 0 > /sys/kernel/tracing/tracing_on
+  echo 1 > /sys/kernel/tracing/buffer_size_kb
+  ```
+
+- **同一内核下部分管理器加载失败**
+  已有多例反馈：原版 KernelSU 未能完成加载时，换用 KernelSU-Next（如 v3.4.2）可以成功。与 `EXIT=13` 无直接关系，可先更换管理器再排查。
+
 ## 注意事项
 
 - Dynamic Switching 第一次要干净开机；之后切换管理器不用重启。
