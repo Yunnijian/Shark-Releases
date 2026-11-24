@@ -65,7 +65,7 @@ SukiSU Ultra 或 FinaSU 的 root 环境。
 
 ## 支持的管理器
 
-KernelSU、KernelSU-Next、BakaSU、SukiSU Ultra、FinaSU 五家。
+KernelSU、KernelSU-Next、BakaSU、SukiSU Ultra、FinaSU、YukiSU、SukiSU Nova 七家。
 
 管理器 APK 不随 Shark 分发，普通模式会直接使用已安装管理器 APK 里的
 `ksud`，所以**用哪家就先装哪家**。
